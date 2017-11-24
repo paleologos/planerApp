@@ -1,0 +1,494 @@
+<% include ./partials/header %>
+
+
+    <div class="container">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  col-xl-12  "> <br></div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  col-xl-12  well">
+        <h2 class=" text-center text-info">Листа интервенција </h2>
+        <h4 class="text-info"><%= today %>    -   <span  id="txt"></span></h4>
+        <h3 class="text-info">Улоговани корисник: <span><%= user.username %></span></h3><span><a class="btn btn-danger btn-sm" href="/logout">Излаз</a></span>
+        <span><a class="btn btn-success btn-sm" href="tasks/<%= user._id %>">Профил корисника</a></span>
+
+
+
+
+    </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 ">
+          <div class="panel panel-primary">
+              <div class="panel-edited bg-primary" id="modification_central"><br>&nbsp;
+                  <span class="glyphicon glyphicon-list"  > &nbsp;</span>КАТЕГОРИЈА
+                  <div class="pull-right ">
+<!-- formular za dodavanje novih zadataka-->
+                    <form class="text-primary" action="/tasks" method="post">
+                      <!-- <label id="catstyle" for="category">Категорија</label> -->
+                        <select name="category" id="category">
+                            <option value="Network">Мрежа / Интернет</option>
+                            <option value="Hardware">Хардвер</option>
+                            <option value="Software"> Софтвер</option>
+                            <option value="Printers">Штампачи / Скенери</option>
+                            <option value="Email">Емаил</option>
+                        </select>
+                        <input type="text" name="task" value="">
+                        <input type="date" name="date" value="">
+                        <input type="submit" name="" value="Додај нови">
+                        &nbsp;
+                        <br>
+                    </form>
+
+
+                  </div>
+
+              </div>
+<!-- Pregled zadataka -->
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" id="panel1">
+        <div class="panel-heading">
+             <h4 class="panel-title ">
+        <a  data-toggle="collapse" data-target="#collapseOne" 
+           href="#collapseOne">
+                <strong class="text-danger">ПРИКАЖИ СВЕ ИНТЕРВЕНЦИЈЕ</strong>
+        </a>
+      </h4>
+
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="panel panel-primary">
+                  <div class="panel-body">
+    
+                      <ul class="list-group">
+                      <% todo.todos.forEach(function(onetask){ %>
+                          <li class="list-group-item">
+                              <div class="checkbox">
+                                  <input type="checkbox" style="margin-left:5px;" class="checkbox2" />
+                                  <label for="checkbox2">
+                                      <%= onetask.category %>
+                                      <%= onetask.task %>
+                                      <span class="text-success">&nbsp; <%= onetask.date.toDateString() %></span>
+                                  </label>
+                              </div>
+                             <div class="pull-right action-buttons">
+                                   <form action="/<%= onetask._id %>?_method=DELETE" method="post">
+                                     <span></span>
+                                    <button class="trash" type="submit" ><span class="glyphicon glyphicon-trash"></span></button>
+                                  </form>
+    
+                              </div>
+                          </li>
+                        <% }); %>
+    
+    
+                      </ul>
+                  </div>
+    
+                  <div class="panel-footer">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <h6>
+                                  Укупно:
+                                  <span class="label label-info">
+                                  <%= catTotal %>
+    
+                                  </span></h6>
+                          </div>
+    
+                  </div>
+              </div>
+            
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!--  Kraj pregleda zadataka-->
+
+<!-- Formular pretrage -->
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4  ">
+            <div class="panel panel-info">
+              <h3 class="text-info text-center">ПРЕТРАГА ПО КАТЕГОРИЈИ:</h3>
+                <div class="panel-edited bg-info" id="modification_right">
+
+                    <div class="pull-right ">
+
+                      <form class="text-info" action="/search" method="post">
+                        <label id="catstyleRight" for="category">Категорија</label>
+                          <select name="categorySearch" id="category">
+                              <option value="Network">Мрежа / Интернет</option>
+                              <option value="Hardware">Хардвер</option>
+                              <option value="Software"> Софтвер</option>
+                              <option value="Printers">Штампачи / Скенери</option>
+                              <option value="Email">Емаил</option>
+                          </select>
+
+                          <input type="submit" name="" value="Претражи">
+                      </form>
+
+                    </div>
+
+                </div>
+                <div class="panel-body">
+
+                    <ul class="list-group">
+                    <% searchedCategory.forEach(function(onetask){ %>
+
+                        <li class="list-group-item">
+                            <div class="checkbox">
+
+                                <label for="checkbox2">
+                                    <%= onetask.category %>
+                                    <%= onetask.task %>
+                                </label>
+                            </div>
+
+                        </li>
+                      <% }); %>
+
+
+                    </ul>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>
+                                    Укупно:
+                                    <span class="label label-info">
+                                    <%= searchLen %>
+
+                                    </span></h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+      <!-- kraj forma pretrage -->
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  col-xl-6  ">
+            <div class="table-responsive ">
+                  <table class="table  bg-info table-condensed table-bordered table-inverse table-hover">
+                  <thead class="bg-primary">
+                    <tr>
+                      <th>#</th>
+                      <th>Категорија</th>
+                      <th>Интервенција</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Мрежа / Интернет</td>
+                      <td><%= catNetwork %></td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Хардвер</td>
+                      <td><%= catHardware %></td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Софтвер</td>
+                      <td><%= catSoftware %></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Штампачи / Скенери</td>
+                      <td><%= catPrinters %></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Емаил</td>
+                      <td><%= catEmail %></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="text-center"><h4>Укупно: </h4></td>
+                      <td><h4><%= catTotal%></h4></td>
+
+                    </tr>
+
+                  </tbody>
+                  </table>
+            </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  col-xl-6 "  >
+        <div  id="piechart" ></div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  col-xl-12 "  >
+
+      </div>
+      <!-- Formular pretrage -->
+
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  col-xl-6   ">
+                  <div class="panel panel-info">
+                    <h3 class="text-info text-center">ПРЕТРАГА ПО ДАТУМУ:</h3>
+                      <div class="panel-edited bg-info" id="modification_right">
+
+                          <div class="pull-right ">
+
+                            <form class="text-info" action="/date" method="post">
+                              <label id="catstyleRight" for="start">Почетни</label>
+                              <input type="date" name="startDate" value="">
+                              <label id="catstyleRight" for="end">Крајњи</label>
+                              <input type="date" name="endDate" value="">
+
+
+                                <input type="submit" name="" value="Претражи">
+                            </form>
+
+                          </div>
+
+                      </div>
+                      <div class="panel-body">
+
+                          <ul class="list-group">
+                          <% dateSearch.forEach(function(onetask){ %>
+
+                              <li class="list-group-item">
+                                  <div class="checkbox">
+
+                                      <span class="text-center text-info lead" >
+                                          <%= onetask.category %>
+                                          &nbsp;
+
+                                      </span>
+                                      <span class="text-center text-danger lead" >
+
+                                          <%= onetask.task %>
+                                            &nbsp;
+                                      </span>
+                                      <span class="text-center text-success lead" >
+
+                                          <%= onetask.date.toDateString() %>
+                                            &nbsp;
+                                      </span>
+                                  </div>
+
+                              </li>
+                            <% }); %>
+
+
+                          </ul>
+                          <div class="panel-footer">
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <h6>
+                                          Укупно:
+                                          <span class="label label-info">
+                                          <%= dateSearch.length %>
+
+                                          </span></h6>
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+            <!-- kraj forma pretrage -->
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  col-xl-6 text-info bg-info " id="graphContainer">
+              <form class="" action="/graph" method="post">
+                <label for="getGrapf">Почетни датум &nbsp;</label>
+                    <input type="date" name="startGD" value="">
+                    <input type="submit" name="" id="getGrapf" value="Прикажи">
+              </form>
+                    <div id="containerCH" ></div>
+            </div>
+          <!-- kraj forma pretrage -->
+
+
+  </div>
+</div>
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Категорија', 'Заступљеност'],
+      ['Мрежа / Интернет',    <%= catNetwork %>],
+      ['Хардвер',      <%= catHardware %>],
+      ['Софтвер',  <%=catSoftware %>],
+      ['Штампачи', <%= catPrinters %>],
+      ['Емаил',    <%= catEmail %>]
+    ]);
+
+    var options = {
+      title: 'Укупни преглед задатака na <%= today %>'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+  }
+
+</script>
+<script>
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('txt').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+</script>
+
+
+<script type="text/javascript">
+Highcharts.chart('containerCH', {
+    chart: {
+        type: 'spline'
+    },
+    title: {
+        text: 'Интервенције по данима'
+    },
+    subtitle: {
+        text: 'петодневни радни период'
+    },
+    xAxis: {
+        type: 'datetime',
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Број интервенција'
+        },
+        minorGridLineWidth: 0,
+        gridLineWidth: 0,
+        alternateGridColor: null,
+        plotBands: [{ // Light air
+            from: 0,
+            to: 1,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                // text: 'Light air',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Light breeze
+            from: 1,
+            to: 2,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                // text: 'Light breeze',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Gentle breeze
+            from: 2,
+            to: 3,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                // text: 'Gentle breeze',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Moderate breeze
+            from: 3,
+            to: 4,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                // text: 'Moderate breeze',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Fresh breeze
+            from: 4,
+            to: 5,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                // text: 'Fresh breeze',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // Strong breeze
+            from: 5,
+            to: 6,
+            color: 'rgba(0, 0, 0, 0)',
+            label: {
+                // text: 'Strong breeze',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }, { // High wind
+            from: 6,
+            to: 7,
+            color: 'rgba(68, 170, 213, 0.1)',
+            label: {
+                // text: 'High wind',
+                style: {
+                    color: '#606060'
+                }
+            }
+        }]
+    },
+    tooltip: {
+        valueSuffix: ' '
+    },
+    plotOptions: {
+        spline: {
+            lineWidth: 5,
+            states: {
+                hover: {
+                    lineWidth: 5
+                }
+            },
+            marker: {
+                enabled: false
+            },
+            pointInterval: 86400000, // one hour
+            pointStart: <%= parsedStartDate %>
+        }
+    },
+    series: [{
+        name: 'интервенција',
+        data: [<%=Qtys[0]%>, <%=Qtys[1]%>, <%=Qtys[2]%>, <%=Qtys[3]%>, <%=Qtys[4] %>]
+
+    }, {
+        // name: 'Vik',
+        // data: [0, 0, 0.6, 0.9, 0.8, 0.2, 0, 0, 0, 0.1, 0.6, 0.7, 0.8, 0.6, 0.2, 0, 0.1, 0.3, 0.3, 0, 0.1, 0, 0, 0, 0.2, 0.1, 0, 0.3, 0, 0.1, 0.2, 0.1, 0.3, 0.3, 0, 3.1, 3.1, 2.5, 1.5, 1.9, 2.1, 1, 2.3, 1.9, 1.2, 0.7, 1.3, 0.4, 0.3]
+    }],
+    navigation: {
+        menuItemStyle: {
+            fontSize: '10px'
+        }
+    }
+});
+
+</script>
+
+
+
+
+
+
+
+<% include ./partials/footer %>

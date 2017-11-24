@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Planer</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style_landing.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+  </head>
+
+  <body class="main">
+    <div class="container">
+    <% if( error && error.length>0){ %>
+      <div class="alert alert-danger"  role="alert">
+        <h3><%= error %></h3>
+      </div>
+    <% } %>
+
+    <% if( success && success.length>0){ %>
+    <div class="alert alert-success" role="alert">
+      <h3><%= success %></h3>
+    </div>
+    <% } %>
+
+    <% if( info && info.length>0){ %>
+    <div class="alert alert-info" role="alert">
+      <h3><%= info %></h3>
+    </div>
+    <% } %>
+
+    </div>
+    <div class="jumbotron">
+      <h1 class="text-center text-danger" id="first-heading">Планер</h1>
+      <h3 class="text-center text-danger" id="second-heading">... јер добра организација је пола посла</h3>
+
+    </div>
+
+  <div class="login-screen"></div>
+      <div class="login-center">
+          <div class="container min-height" style="margin-top: 20px;">
+          	<div class="row">
+                  <div class="col-xs-4 col-md-offset-8">
+                      <div class="login" id="card">
+                      	<div class="front signin_form">
+                          <p>Унесите ваше податке</p>
+
+
+                            <form class="login-form" action="/" method="post">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" name="username" class="form-control" placeholder="Корисничко име">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" name="password" class="form-control" placeholder="Лозинка">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group sign-btn">
+                                    <input type="submit" class="btn" value="Log in">
+                                    <p><strong>Немате налог?</strong><br><a href="#" id="flip-btn" class="signup signup_link">Креирајте налог</a></p>
+                                </div>
+                            </form>
+
+
+                          </div>
+                          <div class="back signup_form" style="opacity: 0;">
+                            <p>Отворите налог</p>
+
+
+                            <form class="login-form" action="/newuser" method="post">
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control" name="firstname" placeholder="Име">
+                                      <span class="input-group-addon">
+                                          <i class="glyphicon glyphicon-user"></i>
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control" name="lastname" placeholder="Презиме">
+                                      <span class="input-group-addon">
+                                          <i class="glyphicon glyphicon-user"></i>
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="input-group">
+                                      <input type="email" class="form-control" name="email" placeholder="Емаил">
+                                      <span class="input-group-addon">
+                                          <i class="glyphicon glyphicon-user"></i>
+                                      </span>
+                                  </div>
+                              </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="username" placeholder="Корисничко име">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="password" placeholder="Лозинка">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group sign-btn">
+                                    <input type="submit" class="btn" value="Направи налог">
+                                    <br><br>
+                                    <p>Већ имате налог <a href="#" id="unflip-btn" class="signup"><strong>Улогујте се</strong></a></p>
+                                </div>
+                            </form>
+
+
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Flip/1.0.18/jquery.flip.js"></script>
+      <script type="text/javascript" src="js/landing.js"></script>
+
+      </body>
+  </html>
