@@ -12,7 +12,7 @@ var expressSession= require("express-session");
 var expressSanitizer= require("express-sanitizer");
 var flash= require("connect-flash");
 var middlewareObj= require("./middleware/middleware");
-var SessionStore = require('session-mongoose')(express);
+
 
 var app = express();
 app.use(methodOverride("_method"));
