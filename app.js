@@ -12,6 +12,7 @@ var expressSession= require("express-session");
 var expressSanitizer= require("express-sanitizer");
 var flash= require("connect-flash");
 var middlewareObj= require("./middleware/middleware");
+var= SessionStore = require('session-mongoose')(express);
 
 var app = express();
 app.use(methodOverride("_method"));
@@ -25,11 +26,21 @@ app.set("view engine", "ejs" );
 // mongoose.connect("mongodb://localhost/todoTest_db", {useMongoClient: true});
 mongoose.connect(process.env.DATABASEURL, {useMongoClient:true});
 
-app.use(require("express-session")({
-    secret:"Milan je car",
-    resave: false,
-    saveUninitialized:false
+app.use(
+  express.session({
+    store: new SessionStore({
+    url: DATABASEURL,
+    interval: 3600000
+  }),
+  cookie: { maxAge: 3600000 },
+  secret: 'Milan je car'
 }));
+
+// app.use(require("express-session")({
+//     secret:"Milan je car",
+//     resave: false,
+//     saveUninitialized:false
+// }));
 mongoose.Promise=global.Promise;
 
 app.use(passport.initialize());
