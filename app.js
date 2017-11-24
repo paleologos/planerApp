@@ -23,7 +23,7 @@ app.use(expressSanitizer());
 app.set("view engine", "ejs" );
 
 // mongoose.connect("mongodb://localhost/todoTest_db", {useMongoClient: true});
-mongoose.connect(process.env.DATABASEURL);
+mongoose.connect(process.env.DATABASEURL, {useMongoClient:true});
 
 app.use(require("express-session")({
     secret:"Milan je car",
