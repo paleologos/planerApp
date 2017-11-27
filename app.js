@@ -1,30 +1,31 @@
-var express= require("express");
-var bodyParser= require("body-parser");
-var request= require("request");
-var mongoose = require("mongoose");
-var Todo= require("./models/Todo");
-var User= require("./models/user");
-var methodOverride= require("method-override");
-var passport= require("passport");
-var LocalStrategy= require("passport-local");
-var passportLocalMongoose= require("passport-local-mongoose");
-var expressSession= require("express-session");
-var expressSanitizer= require("express-sanitizer");
-var flash= require("connect-flash");
-var middlewareObj= require("./middleware/middleware");
+var express= require("express"),
+ bodyParser= require("body-parser"),
+ request= require("request"),
+ mongoose = require("mongoose"),
+ Todo= require("./models/Todo"),
+ User= require("./models/user"),
+ methodOverride= require("method-override"),
+ passport= require("passport"),
+ LocalStrategy= require("passport-local"),
+ passportLocalMongoose= require("passport-local-mongoose"),
+ expressSession= require("express-session"),
+ expressSanitizer= require("express-sanitizer"),
+ flash= require("connect-flash"),
+ middlewareObj= require("./middleware/middleware"),
+ port= process.env.PORT || 3000,
+ app = express();
 
 
-var app = express();
-app.use(methodOverride("_method"));
 
+ app.use(methodOverride("_method"));
 
 app.use(express.static(__dirname+ "/public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressSanitizer());
 app.set("view engine", "ejs" );
 
-// mongoose.connect("mongodb://localhost/todoTest_db", {useMongoClient: true});
-mongoose.connect(process.env.DATABASEURL, {useMongoClient:true});
+var dbUrl= process.env.DATABASEURL || "mongodb://localhost/todoTest_db";
+mongoose.connect(dbUrl, {useMongoClient:true});
 
 
 
@@ -57,19 +58,6 @@ var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 var searchedCategory=[];
-// var searchedTasks=[];
-var searchLen=0;
-var dateSearch=[] ;
-var startDate;
-var endDate;
- var Qtys=[];
-var QtysLength=0;
-var startDateG;
-
-
-
-var categorySearch= "";
-
 if(dd<10) {
     dd = '0'+dd
 }
@@ -79,6 +67,19 @@ if(mm<10) {
 }
 
 today = dd + '.' + mm + '.' + yyyy;
+
+
+
+var searchLen=0;
+var dateSearch=[] ;
+var startDate;
+var endDate;
+var Qtys=[];
+var QtysLength=0;
+var startDateG;
+var categorySearch= "";
+
+
 
 
 // landing page
@@ -135,34 +136,20 @@ app.get("/tasks", middlewareObj.isLoggedIn, function(req, res){
 
 
 
-      //       // ODLICNE FUNKCIJE POPUNJAVANJA I KONVERZIJE NIZOVA DATUMA
-      // countTodo.forEach(function(objDate){
-      // startGraphDate= objDate.date;  // postavlja privremenu varijablu i dodeljuje  trenutni flag
-      //
-      // startDateArray.push(startGraphDate); // dodaje varijablu u prazan niz
-      // startDateArray.sort(function(a, b){return a-b}); // sortira niz pomocu funkcije od najmanjeg ka najvecem
-      //
-      // });
-      // startDateArray.forEach(function(flag){
-      //   var dateParsed= Date.parse(flag);
-      //   parsedDateArray.push(dateParsed); // dodaje varijablu u prazan niz
-      //   parsedDateArray.sort(function(a, b){return a-b}); // sortira niz pomocu funkcije od najmanjeg ka najvecem
-      // });
 
       //Kreira pocetni datum
       // console.log(startDate);
       var startGrapficDate= new Date(startDateG);
       // console.log(startGrapficDate);
 
-      // startGrapficDate.setDate(startGrapficDate.get()+1);
+
 
       var parsedStartDate= Date.parse(startGrapficDate);
       parsedStartDate;
 
       // console.log(startGrapficDate);
 
-      // parsedStartDate.setDate(parsedStartDate.getDate()+1);
-      // console.log(parsedStartDate);
+
 
 
 
@@ -178,7 +165,7 @@ res.render("tasks", { todo:todo,  today:today, user:currentUser, catTotal:catTot
 // search by category
 app.post("/search",  middlewareObj.isLoggedIn, function(req, res){
   var currentUser= req.user;
-  
+
   var categorySearch = req.body.categorySearch;
 
   var catTotal=0;
@@ -198,13 +185,6 @@ app.post("/search",  middlewareObj.isLoggedIn, function(req, res){
       console.log(err);
     }
     else{
-      // searchTodos.forEach(function(foundCategory){
-      //   foundCategory.find({category: categorySearch}, function(err, foundedCategory){
-      //     console.log(foundedCategory);
-      //
-      //   });
-      //
-      // });
 
 
 
@@ -218,7 +198,7 @@ app.post("/search",  middlewareObj.isLoggedIn, function(req, res){
                 searchedCategory.push(catObj);
 
 
-          // searchedTasks.push(category.task);
+
 
         }
 
@@ -233,7 +213,7 @@ app.post("/search",  middlewareObj.isLoggedIn, function(req, res){
 
       });
           searchedCategory=[];
-          // searchedTasks=[];
+
 
 
 
@@ -486,20 +466,6 @@ startDateInsert5.setDate(startDateInsert.getDate()+3);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Qtys=[];
 
 
@@ -624,6 +590,6 @@ app.get("/logout", function(req, res){
 
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
-  console.log("SERVER STARTED");
+app.listen(port, process.env.IP, function(){
+  console.log("SERVER STARTED AT PORT " + port);
 });
