@@ -248,42 +248,41 @@ var express= require("express"),
 
     //
 
-     var  endDateInsert1= new Date();
+    /
+
+    var startDateInsert1=new Date(startDateG);
+    var startDateInsert2=new Date(startDateG);
+    var startDateInsert3=new Date(startDateG);
+    var startDateInsert4=new Date(startDateG);
+    var startDateInsert5=new Date(startDateG);
 
 
-     var  endDateInsert2= new Date();
+     var  endDateInsert1=new Date(startDateG);
+     var  endDateInsert2=new Date(startDateG);
+     var  endDateInsert3=new Date(startDateG);
+     var  endDateInsert4=new Date(startDateG);
+     var  endDateInsert5=new Date(startDateG);
 
 
-     var  endDateInsert3= new Date();
 
-
-     var  endDateInsert4= new Date();
-
-
-     var  endDateInsert5= new Date();
-     var startDateInsert1=new Date();
-     var startDateInsert2=new Date();
-     var startDateInsert3=new Date();
-     var startDateInsert4=new Date();
-     var startDateInsert5=new Date();
 
 
     //POVECAVA DATUM ZA JEDAN DAN UNAPRED
 
 
-    startDateInsert1.setDate(startDateInsert.getDate()-1);
-    startDateInsert2.setDate(startDateInsert.getDate()+0);
-    startDateInsert3.setDate(startDateInsert.getDate()+1);
-    startDateInsert4.setDate(startDateInsert.getDate()+2);
-    startDateInsert5.setDate(startDateInsert.getDate()+3);
+    startDateInsert1.setDate(startDateInsert.getDate());
+    startDateInsert2.setDate(startDateInsert.getDate()+1);
+    startDateInsert3.setDate(startDateInsert.getDate()+2);
+    startDateInsert4.setDate(startDateInsert.getDate()+3);
+    startDateInsert5.setDate(startDateInsert.getDate()+4);
 
 
 
-     endDateInsert1.setDate(startDateInsert.getDate()+0);
-     endDateInsert2.setDate(startDateInsert.getDate()+1);
-     endDateInsert3.setDate(startDateInsert.getDate()+2);
-     endDateInsert4.setDate(startDateInsert.getDate()+3);
-     endDateInsert5.setDate(startDateInsert.getDate()+4);
+     endDateInsert1.setDate(startDateInsert.getDate()+1);
+     endDateInsert2.setDate(startDateInsert.getDate()+2);
+     endDateInsert3.setDate(startDateInsert.getDate()+3);
+     endDateInsert4.setDate(startDateInsert.getDate()+4);
+     endDateInsert5.setDate(startDateInsert.getDate()+5);
 
      // console.log(endDateInsert2);
 
